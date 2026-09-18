@@ -56,3 +56,6 @@ New listings and sign splits are the two highest-signal outputs.
   filters these by default via `max_apy` and `min_usd`.
 - Uniswap `api.uniswap.org` returns 409 on quote endpoints. Not solved.
 - trade.xyz has no standalone API. It is HIP-3 builder `xyz` on Hyperliquid.
+- Builder identities: `xyz` is trade[XYZ], `io` is Entropy (live pre-IPO deployer,
+  launched 2026-08-24). `vntl` is Ventuals, sunset: all 15 markets carry zero OI
+  and zero volume with stale marks. `builders.py` flags it rather than dropping it.

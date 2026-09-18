@@ -11,9 +11,14 @@ CTX = ssl.create_default_context()
 URL = "https://api.hyperliquid.xyz/info"
 H = {"User-Agent": "Mozilla/5.0", "Content-Type": "application/json"}
 
-KNOWN = {"xyz": "trade[XYZ]", "vntl": "Ventuals", "io": "io",
+# Builder identities. Ventuals (vntl) is sunset; its pre-IPO markets are dead
+# and carry no OI. Entropy (io) is the live pre-IPO deployer, launched
+# 2026-08-24, backed by Ribbit, bonded with ~500k HYPE.
+KNOWN = {"xyz": "trade[XYZ]", "io": "Entropy", "vntl": "Ventuals (sunset)",
          "para": "para", "mkts": "mkts", "km": "km", "flx": "flx",
          "hyna": "hyna", "cash": "cash", "abcd": "abcd"}
+
+DEAD = {"vntl"}
 
 
 def _post(payload):
@@ -34,6 +39,7 @@ def markets(dex):
         out.append({
             "venue": f"hl:{dex}",
             "builder": KNOWN.get(dex, dex),
+            "sunset": dex in DEAD,
             "symbol": a["name"],
             "max_leverage": a.get("maxLeverage"),
             "funding": _f(c.get("funding")),
@@ -47,9 +53,13 @@ def markets(dex):
     return out
 
 
-def collect_all():
+def collect_all(include_sunset=True):
+    """Every builder dex. Sunset deployers keep stale marks and zero OI, so
+    they are flagged rather than silently dropped."""
     out, errs = [], {}
     for d in dexs():
+        if not include_sunset and d in DEAD:
+            continue
         try:
             out.extend(markets(d))
         except Exception as e:
@@ -74,7 +84,8 @@ if __name__ == "__main__":
         b["vol"] += r["day_ntl_vlm"] or 0
         b["syms"].append(r["symbol"].split(":")[-1])
     for v, b in sorted(by.items(), key=lambda kv: -kv[1]["oi"]):
-        print(f"{v:12s} {b['n']:4d} mkts  OI ${b['oi']:>14,.0f}  24h ${b['vol']:>14,.0f}")
+        tag = "  [SUNSET]" if v.split(":")[1] in DEAD else ""
+        print(f"{v:12s} {b['n']:4d} mkts  OI ${b['oi']:>14,.0f}  24h ${b['vol']:>14,.0f}{tag}")
         print(f"             {', '.join(b['syms'][:18])}")
     print(f"\ntotal {len(rows)} builder markets across {len(by)} dexs")
     if errs:
