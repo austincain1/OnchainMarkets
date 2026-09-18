@@ -15,8 +15,39 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PER_8H, PER_HOUR = 3 * 365, 24 * 365
 
 
-def sig(rank, text, theme):
-    return {"rank": rank, "text": text, "theme": theme}
+# Question shapes that have produced usable analysis. Deliberately mechanical:
+# the point is to remove the blank page, not to pre-load an argument. Austin
+# picks one, sends it cold, and the analysis comes back unprimed.
+QBANK = {
+    "funding": [
+        "Who is on the other side of this and what are they being paid to do?",
+        "What would it cost to carry this for 30 days, all-in, including the leg I am forgetting?",
+        "What breaks if enough people put this trade on?",
+        "Is this a real dislocation or a thin book printing a number? How would I tell?",
+    ],
+    "carry": [
+        "How would a desk actually construct this, and what is the minimum size where it is worth the operational effort?",
+        "What does this cost offchain, and what specifically stops it from existing there?",
+        "What has to be true for this gap to close, and what would keep it open?",
+        "Where does the money come from? Name the party who is worse off.",
+    ],
+    "listing": [
+        "Who wanted this market badly enough to list it, and what were they doing before it existed?",
+        "What can a trader do the day this lists that they could not do the day before?",
+        "What would make this market fail, and how fast would that show up in the data?",
+    ],
+    "structure": [
+        "What is the tradeoff being made here, and who eats it?",
+        "How would this look to someone who runs a book on a traditional venue?",
+        "What does this number actually measure, and what does it miss?",
+        "Is this a design choice or an accident of how the thing was built?",
+    ],
+}
+
+
+def sig(rank, text, theme, qkey="structure"):
+    return {"rank": rank, "text": text, "theme": theme,
+            "questions": QBANK.get(qkey, QBANK["structure"])}
 
 
 def new_listings():
@@ -32,11 +63,11 @@ def new_listings():
         if added:
             out.append(sig(100, f"{v} listed {len(added)} new market(s) overnight: "
                            f"{', '.join(added)}. Each one had no funding rate yesterday.",
-                           "price-discovery-markets-on-everything"))
+                           "price-discovery-markets-on-everything", "listing"))
         if removed:
             out.append(sig(90, f"{v} removed {len(removed)} market(s): {', '.join(removed)}. "
                            f"A delisting is a market that failed to find two sides.",
-                           "market-sizing-reauction"))
+                           "market-sizing-reauction", "listing"))
     return out
 
 
@@ -50,13 +81,13 @@ def funding_signals():
                       f"{top['max_venue']} at {top['rates'][top['max_venue']]*PER_8H*100:.1f}%/yr "
                       f"versus {top['min_venue']} at {top['rates'][top['min_venue']]*PER_8H*100:.1f}%/yr. "
                       f"Same exposure, opposite sign, simultaneously.",
-                      "funding-as-yield-delta-neutral"))
+                      "funding-as-yield-delta-neutral", "funding"))
     wide = [r for r in rows if r["spread"] * PER_8H > 0.25][:5]
     if wide:
         out.append(sig(70, "Widest funding dispersion: " + "; ".join(
             f"{r['symbol']} {r['spread']*PER_8H*100:.0f}pp between {r['max_venue']} and {r['min_venue']}"
             for r in wide) + ". Venues do not share a balance sheet, so the spread persists.",
-            "execution-costs-venue-selection"))
+            "execution-costs-venue-selection", "funding"))
     return out
 
 
@@ -73,82 +104,3 @@ def carry_signals():
             cheapest = min(stables, key=lambda r: r["borrow_apy"])
             out.append(sig(80, f"BTC perp funding annualizes at {btc*100:.1f}% on Lighter. "
                           f"Borrowing {cheapest['symbol']} against collateral on Aave costs "
-                          f"{cheapest['borrow_apy']*100:.2f}%. The gap is {(btc-cheapest['borrow_apy'])*100:.1f}pp "
-                          f"and it is the whole argument for collateral that earns while it margins.",
-                          "yield-bearing-collateral"))
-    except Exception as e:
-        out.append(sig(0, f"carry signal unavailable: {type(e).__name__}", "-"))
-    return out
-
-
-def margin_signals():
-    out = []
-    try:
-        d = {r["currency"]: r for r in derive.currencies() if r.get("im_perp")}
-        near_cap = [r for r in d.values() if r.get("oi_cap") and
-                    (r["oi_current"] or 0) / r["oi_cap"] > 0.5]
-        if near_cap:
-            out.append(sig(60, "Derive open interest near its cap: " + "; ".join(
-                f"{r['currency']} at {(r['oi_current']/r['oi_cap'])*100:.0f}% of a "
-                f"{r['oi_cap']:,.0f} cap" for r in near_cap) +
-                ". An OI cap is a venue deciding how much of a risk it will hold.",
-                "risk-parameters-transparency"))
-        if "BTC" in d:
-            b = d["BTC"]
-            out.append(sig(55, f"Derive requires {b['im_perp']*100:.1f}% initial margin on BTC perp "
-                          f"({b['max_leverage']:.1f}x max). Reg-T on US equities is 50%. "
-                          f"Same trader, same collateral, two different worlds.",
-                          "capital-efficiency-reg-t"))
-    except Exception as e:
-        out.append(sig(0, f"margin signal unavailable: {type(e).__name__}", "-"))
-    return out
-
-
-def zombie_signals():
-    out = []
-    try:
-        rows, _ = builders.collect_all()
-        by = {}
-        for r in rows:
-            b = by.setdefault(r["venue"], {"n": 0, "oi": 0.0, "vol": 0.0})
-            b["n"] += 1
-            b["oi"] += r["oi_usd"] or 0
-            b["vol"] += r["day_ntl_vlm"] or 0
-        dead = [(v, b) for v, b in by.items() if b["vol"] == 0 and b["n"] > 2]
-        if dead:
-            n_mkts = sum(b["n"] for _, b in dead)
-            names = ", ".join(v.split(":")[1] for v, _ in dead)
-            out.append(sig(65, f"{len(dead)} of {len(by)} HIP-3 builders are dark: {names}, "
-                          f"{n_mkts} markets between them carrying live-looking marks with zero "
-                          f"open interest and zero volume. A market list is not a market, and "
-                          f"counting listings without checking open interest overstates the "
-                          f"category badly.", "price-discovery-markets-on-everything"))
-        live = sorted([(v, b) for v, b in by.items() if b["vol"] > 0],
-                      key=lambda kv: -kv[1]["oi"])
-        if live:
-            v, b = live[0]
-            out.append(sig(75, f"{v} carries ${b['oi']:,.0f} of open interest across {b['n']} "
-                          f"builder-deployed markets on ${b['vol']:,.0f} of daily volume. "
-                          f"These are equities and commodities settling on a crypto venue.",
-                          "spot-collateral-collapsing-basis"))
-    except Exception as e:
-        out.append(sig(0, f"zombie signal unavailable: {type(e).__name__}", "-"))
-    return out
-
-
-def run():
-    sigs = []
-    for fn in (new_listings, funding_signals, carry_signals, margin_signals, zombie_signals):
-        try:
-            sigs.extend(fn())
-        except Exception as e:
-            sigs.append(sig(0, f"{fn.__name__} failed: {type(e).__name__}: {e}", "-"))
-    sigs.sort(key=lambda s: -s["rank"])
-    print("CANDIDATE INPUTS (raw, ranked. Edit, keep what you have a view on, discard the rest.)\n")
-    for i, s in enumerate(sigs, 1):
-        print(f"{i}. {s['text']}")
-        print(f"   -> theme: {s['theme']}\n")
-
-
-if __name__ == "__main__":
-    run()
