@@ -1,0 +1,59 @@
+name: daily snapshot
+
+on:
+  schedule:
+    - cron: '15 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Collect snapshot
+        run: python3 collectors/snapshot.py
+
+      - name: Write daily report
+        run: |
+          mkdir -p reports
+          DAY=$(date -u +%F)
+          {
+            echo "# $DAY"
+            echo
+            echo '## Market list changes'
+            echo '```'
+            python3 collectors/diff.py 2>&1 || echo "(diff unavailable)"
+            echo '```'
+            echo
+            echo '## Funding dispersion'
+            echo '```'
+            python3 collectors/dispersion.py 25 2>&1 || echo "(dispersion unavailable)"
+            echo '```'
+            echo
+            echo '## Builder-deployed markets'
+            echo '```'
+            python3 collectors/builders.py 2>&1 || echo "(builders unavailable)"
+            echo '```'
+            echo
+            echo '## Carry: funding vs borrow'
+            echo '```'
+            python3 collectors/carry.py 2>&1 || echo "(carry unavailable)"
+            echo '```'
+          } > "reports/$DAY.md"
+          cp "reports/$DAY.md" reports/latest.md
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add snapshots reports
+          git diff --staged --quiet || git commit -m "snapshot $(date -u +%F)"
+          git push
