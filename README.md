@@ -17,6 +17,7 @@ Public endpoints only. No API keys. No secrets in this repo, ever.
 | Coinbase Exchange | `api.exchange.coinbase.com` | none |
 | Pyth | `hermes.pyth.network` | none |
 | DefiLlama | `api.llama.fi` (free endpoints) | none |
+| Derive v3 | `api.derive.xyz/v3` (JSON-RPC over POST) | none for market data |
 
 Lighter's `/api/v1/funding-rates` also republishes Binance, Bybit and
 Hyperliquid funding, which routes around the geo-blocks on those APIs.
@@ -31,6 +32,9 @@ python3 collectors/builders.py     # HIP-3 builder markets (equities, commoditie
 python3 collectors/lending.py      # Morpho + Aave borrow/supply rates
 python3 collectors/reference.py    # Coinbase, Pyth, DefiLlama
 python3 collectors/carry.py        # funding vs borrow cost, side by side
+python3 collectors/derive.py       # Derive margin requirements + OI caps
+python3 collectors/share.py        # venue TVL / category share (DefiLlama free)
+python3 collectors/signals.py      # RANKED CANDIDATE CONTENT INPUTS
 ```
 
 ## Daily routine
@@ -39,7 +43,11 @@ python3 collectors/carry.py        # funding vs borrow cost, side by side
 2. `diff.py` to see what listed or delisted overnight.
 3. `dispersion.py` for funding spreads and sign splits.
 
-New listings and sign splits are the two highest-signal outputs.
+`signals.py` is the one to read first. It applies rules to everything above and
+emits ranked plain-language observations with the numbers attached, each tagged
+with the content theme it feeds. They are raw inputs, not drafts.
+
+New listings and funding sign splits are the two highest-signal rules.
 
 ## Known gaps
 
