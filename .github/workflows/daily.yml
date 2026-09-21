@@ -22,6 +22,8 @@ jobs:
         run: python3 collectors/snapshot.py
 
       - name: Write daily report
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
           mkdir -p reports
           DAY=$(date -u +%F)
@@ -41,6 +43,11 @@ jobs:
             echo '## Builder-deployed markets'
             echo '```'
             python3 collectors/builders.py 2>&1 || echo "(builders unavailable)"
+            echo '```'
+            echo
+            echo '## Offchain reference rates (FRED)'
+            echo '```'
+            python3 collectors/rates.py 2>&1 || echo "(rates unavailable)"
             echo '```'
             echo
             echo '## Carry: funding vs borrow'
