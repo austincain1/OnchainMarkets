@@ -110,4 +110,16 @@ def collect_all():
         res["platform_variational"] = plat
     except Exception as e:
         res["errors"]["variational"] = f"{type(e).__name__}: {e}"
+    # HIP-3 builder markets, one venue key per deployer (hl:xyz, hl:io, ...).
+    # This is where listings churn fastest; without it the diff is blind to
+    # new trade.xyz and Entropy markets.
+    try:
+        import builders
+        rows, errs = builders.collect_all()
+        for r in rows:
+            res["venues"].setdefault(r["venue"], []).append(r)
+        for d, e in errs.items():
+            res["errors"][f"hl:{d}"] = e
+    except Exception as e:
+        res["errors"]["builders"] = f"{type(e).__name__}: {e}"
     return res
