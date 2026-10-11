@@ -1,26 +1,24 @@
-# 2026-10-10
+# 2026-10-11
 
 ## Market list changes
 ```
-2026-10-09.json -> 2026-10-10.json
+2026-10-10.json -> 2026-10-11.json
 
 hl:abcd: no change (1 markets)
 hl:cash: no change (17 markets)
 hl:flx: no change (16 markets)
 hl:hyna: no change (25 markets)
-hl:io: 11 -> 12
-  NEW     (1): io:XIAOMI
-
+hl:io: no change (12 markets)
 hl:km: no change (23 markets)
 hl:mkts: no change (24 markets)
 hl:para: no change (38 markets)
 hl:vntl: no change (15 markets)
-hl:xyz: no change (133 markets)
+hl:xyz: 133 -> 134
+  NEW     (1): xyz:RELIANCE
+
 hyperliquid: no change (234 markets)
 lighter: no change (235 markets)
-variational: 569 -> 568
-  REMOVED (1): STG
-
+variational: no change (568 markets)
 ```
 
 ## Funding dispersion
@@ -29,45 +27,45 @@ variational: 569 -> 568
 
 sym             lighter  hyperliqu    binance      bybit     spread      ann  flag
 ----------------------------------------------------------------------------------
-CASHCAT        -0.4072%    0.0100%          -    0.0100%    0.4172%      457%/yr  SIGN SPLIT
-UNITREE         0.0032%          -    0.0000%   -0.2036%    0.2068%      226%/yr  SIGN SPLIT
-PLTR            0.1016%    0.1318%    0.0000%    0.1244%    0.1318%      144%/yr
-RIVER          -0.0576%          -    0.0100%    0.0640%    0.1217%      133%/yr  SIGN SPLIT
-MET             0.0096%   -0.0870%   -0.0228%   -0.0020%    0.0966%      106%/yr  SIGN SPLIT
-ZRO             0.0816%    0.0100%    0.0100%    0.0100%    0.0716%       78%/yr
-STONK           0.0680%          -          -    0.1310%    0.0630%       69%/yr
-AXTI            0.0032%          -    0.0000%   -0.0531%    0.0563%       62%/yr  SIGN SPLIT
-STRK            0.0096%    0.0100%    0.0075%   -0.0432%    0.0532%       58%/yr  SIGN SPLIT
-SKY             0.0096%    0.0100%    0.0100%   -0.0383%    0.0483%       53%/yr  SIGN SPLIT
-PONS            0.0096%    0.0100%    0.0284%    0.0548%    0.0452%       49%/yr
-SOXL           -0.0136%          -    0.0000%   -0.0424%    0.0424%       46%/yr
-HYUNDAI               -    0.0421%    0.0000%    0.0000%    0.0421%       46%/yr
-CAP             0.0096%          -    0.0500%    0.0379%    0.0404%       44%/yr
-TRX            -0.0072%   -0.0166%   -0.0291%   -0.0476%    0.0404%       44%/yr
-2Z              0.0096%    0.0100%    0.0100%   -0.0290%    0.0390%       43%/yr  SIGN SPLIT
-ARB            -0.0256%    0.0070%   -0.0082%    0.0061%    0.0326%       36%/yr  SIGN SPLIT
-BABA            0.0032%          -    0.0000%   -0.0265%    0.0297%       33%/yr  SIGN SPLIT
-USELESS         0.0096%    0.0100%    0.0100%    0.0378%    0.0282%       31%/yr
-XRP            -0.0176%    0.0100%    0.0035%   -0.0052%    0.0276%       30%/yr  SIGN SPLIT
-SOL            -0.0168%    0.0100%    0.0033%    0.0004%    0.0268%       29%/yr  SIGN SPLIT
-CRWV            0.0032%          -    0.0000%    0.0266%    0.0266%       29%/yr
-AVAX           -0.0152%    0.0100%    0.0060%    0.0066%    0.0252%       28%/yr  SIGN SPLIT
-ZORA            0.0096%    0.0100%    0.0100%   -0.0137%    0.0237%       26%/yr  SIGN SPLIT
-1000PEPE        0.0096%    0.0100%   -0.0130%    0.0100%    0.0230%       25%/yr  SIGN SPLIT
+AI              1.0520%    0.0000%    0.0000%          -    1.0520%     1152%/yr
+BMNR            0.0288%          -    0.0812%    0.5969%    0.5681%      622%/yr
+BOT             0.4504%          -    0.0000%    0.0000%    0.4504%      493%/yr
+MINIMAX         0.0032%          -    0.0867%    0.3308%    0.3276%      359%/yr
+MSTR            0.1800%    0.2099%    0.0594%    0.3335%    0.2740%      300%/yr
+PRL             0.2624%          -    0.0365%    0.0100%    0.2524%      276%/yr
+SOXS            0.0032%          -   -0.0584%   -0.1695%    0.1727%      189%/yr  SIGN SPLIT
+SOXL            0.1592%          -    0.0662%    0.2282%    0.1621%      177%/yr
+CRCL            0.1280%    0.1396%    0.0084%    0.1625%    0.1541%      169%/yr
+AXTI            0.0032%          -    0.0000%    0.1324%    0.1324%      145%/yr
+S              -0.0024%   -0.0026%   -0.0366%   -0.1313%    0.1289%      141%/yr
+COIN            0.1024%    0.1155%    0.0206%    0.1494%    0.1288%      141%/yr
+CASHCAT         0.1368%    0.0140%          -    0.0100%    0.1268%      139%/yr
+MU              0.0992%          -    0.0066%    0.1256%    0.1191%      130%/yr
+HOOD            0.0808%    0.0962%    0.0000%    0.1063%    0.1063%      116%/yr
+PIPPIN                -          -    0.1030%    0.0100%    0.0930%      102%/yr
+RKLB            0.0032%          -    0.0000%    0.0925%    0.0925%      101%/yr
+CRWV            0.0032%          -    0.0000%    0.0914%    0.0914%      100%/yr
+DRAM            0.0744%          -    0.0036%    0.0931%    0.0894%       98%/yr
+CC              0.0968%    0.0100%    0.0100%    0.0100%    0.0868%       95%/yr
+AMD             0.0696%    0.0843%    0.0000%          -    0.0843%       92%/yr
+BE              0.0032%          -    0.0000%    0.0811%    0.0811%       89%/yr
+SKHYNIX               -    0.1013%    0.0210%    0.0794%    0.0803%       88%/yr
+KORU            0.0032%          -    0.0212%    0.0802%    0.0770%       84%/yr
+SKHY            0.0752%          -    0.0183%    0.0930%    0.0747%       82%/yr
 
 33 symbols where one venue pays longs while another pays shorts:
-  CASHCAT, UNITREE, RIVER, MET, AXTI, STRK, SKY, 2Z, ARB, BABA, XRP, SOL, AVAX, ZORA, 1000PEPE, VVV, HYPE, GMX, JUP, PUMP, 1000SHIB, BIO, XAG, ETH, EIGEN, UNI, SNDK, POL, BCH, XPT, BRENTOIL, TSM, QNT
+  SOXS, STRK, MRNA, XMR, MET, XLM, CHIP, TRX, XRP, LIT, AERO, DOGE, SKY, VIRTUAL, WLFI, PYTH, ARB, JUP, 2Z, 1000PEPE, 1000SHIB, HYPE, FIL, BTC, BCH, SUI, AAVE, BRENTOIL, OP, ADA, ASTER, DYDX, ETH
 ```
 
 ## Builder-deployed markets
 ```
-hl:xyz        133 mkts  OI $ 3,576,555,845  24h $   686,404,916
+hl:xyz        134 mkts  OI $ 3,603,577,836  24h $   211,540,664
              XYZ100, TSLA, NVDA, GOLD, HOOD, INTC, PLTR, COIN, META, AAPL, MSFT, ORCL, GOOGL, AMZN, AMD, MU, SNDK, MSTR
-hl:io          12 mkts  OI $    65,060,589  24h $    31,755,299
+hl:io          12 mkts  OI $    65,242,675  24h $    31,389,090
              OAI, ANTH, SNDK, IONQ, NBIS, EWY, GPRO, SBE, TCNT, DRAM, PRL, XIAOMI
-hl:para        38 mkts  OI $    17,646,924  24h $     2,902,221
+hl:para        38 mkts  OI $    17,879,676  24h $     1,133,693
              TOTAL2, OTHERS, BTCD, H100, AVGO, COHR, GLW, CRDO, LRCX, NET, STX, IREN, VST, TER, AAOI, 10Y, CIEN, NAVER
-hl:mkts        24 mkts  OI $    10,949,460  24h $     1,512,144
+hl:mkts        24 mkts  OI $    11,320,043  24h $     1,000,418
              US500, BABA, EUR, USBOND, SMALL2000, USTECH, USENERGY, USOIL, TSLA, SILVER, GOLD, AAPL, GOOGL, SEMI, GLDMINE, NVDA, TENCENT, JPN225
 hl:flx         16 mkts  OI $             0  24h $             0
              TSLA, NVDA, CRCL, COIN, XMR, GOLD, SILVER, OIL, GAS, BTC, COPPER, PALLADIUM, PLATINUM, USDE, USA500, USA100
@@ -82,7 +80,7 @@ hl:abcd         1 mkts  OI $             0  24h $             0
 hl:cash        17 mkts  OI $             0  24h $             0
              USA500, TSLA, NVDA, HOOD, GOOGL, INTC, AMZN, MSFT, META, GOLD, SILVER, EWY, WTI, BTC, KWEB, ETH, CAR
 
-total 304 builder markets across 10 dexs
+total 305 builder markets across 10 dexs
 ```
 
 ## Offchain reference rates (FRED)
@@ -102,43 +100,43 @@ PERP FUNDING (annualized from 8h feed) vs ONCHAIN BORROW
 
 asset        lighter  hyperliq   binance     bybit  aave brw  aave sup
 ----------------------------------------------------------------------
-BTC             0.9%     10.4%      0.8%      4.5%     0.00%     0.00%
-ETH            -4.4%      8.5%      3.3%      8.7%     0.00%     0.00%
-SOL           -18.4%     10.9%      3.6%      0.4%         -         -
-ENA            10.5%     10.9%     10.9%     10.9%         -         -
-HYPE            1.8%     10.9%     10.4%    -12.4%         -         -
-LINK            3.5%      4.2%      5.9%      0.5%     0.00%     0.00%
-AVAX          -16.6%     10.9%      6.6%      7.3%         -         -
-DOGE           10.5%     10.9%      0.7%     10.9%         -         -
+BTC           -10.5%      5.8%      1.6%     -5.1%     0.00%     0.00%
+ETH             2.6%     -2.2%      1.9%      6.2%     0.00%     0.00%
+SOL            10.5%     10.9%      9.3%      5.7%         -         -
+ENA            10.5%     21.8%     10.9%     10.9%         -         -
+HYPE           10.5%     10.9%      1.9%     -5.5%         -         -
+LINK           10.5%     10.9%      5.1%      2.8%     0.00%     0.00%
+AVAX           10.5%     10.9%     10.9%     10.9%         -         -
+DOGE          -15.8%     10.9%      5.8%      5.0%         -         -
 
 STABLE BORROW COST (the cost of carrying a hedged position)
   aave   USDT     borrow  0.11%  supply  0.00%
   aave   GHO      borrow  3.11%  supply  1.70%
+  aave   USDC     borrow  3.90%  supply  2.74%
   aave   RLUSD    borrow  3.91%  supply  2.38%
-  aave   GHO      borrow  3.98%  supply  3.14%
+  aave   GHO      borrow  3.99%  supply  3.15%
   aave   GHO      borrow  4.06%  supply  3.26%
-  aave   USDC     borrow  4.30%  supply  3.33%
   aave   USDC     borrow  4.36%  supply  3.15%
-  aave   USDT     borrow  4.49%  supply  3.62%
-  morpho    cbBTC/USDC    borrow  5.01%  lltv 0.86  $337,194,905
-  morpho     kBTC/RLUSD   borrow  4.10%  lltv 0.86  $235,146,806
-  morpho    PRIME/PYUSD   borrow  5.31%  lltv 0.86  $209,624,916
-  morpho     kBTC/PYUSD   borrow  4.20%  lltv 0.86  $160,702,287
-  morpho   wstETH/USDT    borrow  3.10%  lltv 0.86  $150,532,620
-  morpho     WBTC/USDC    borrow  5.01%  lltv 0.86  $128,831,162
+  aave   USDT     borrow  4.41%  supply  3.48%
+  morpho    cbBTC/USDC    borrow  5.00%  lltv 0.86  $337,293,335
+  morpho     kBTC/RLUSD   borrow  4.12%  lltv 0.86  $235,197,340
+  morpho    PRIME/PYUSD   borrow  5.33%  lltv 0.86  $209,660,327
+  morpho     kBTC/PYUSD   borrow  4.20%  lltv 0.86  $160,730,064
+  morpho   wstETH/USDT    borrow  3.08%  lltv 0.86  $149,858,412
+  morpho     WBTC/USDC    borrow  5.08%  lltv 0.86  $128,807,476
 
 OFFCHAIN BENCHMARK: SOFR 3.87% (2026-10-08)
-  BTC perp funding 0.88% vs SOFR 3.87%: spread -2.99pp over the offchain cost of money
+  BTC perp funding -10.51% vs SOFR 3.87%: spread -14.38pp over the offchain cost of money
 
-BUILDER-DEPLOYED PERPS: 304 markets, 158 with volume today
-  xyz:SP500        OI $  374,809,218  funding      5.5%/yr
-  xyz:GOLD         OI $  299,759,265  funding      5.5%/yr
-  xyz:SKHX         OI $  272,619,626  funding      5.5%/yr
-  xyz:XYZ100       OI $  232,453,664  funding      5.5%/yr
-  xyz:BRENTOIL     OI $  199,509,333  funding     -4.6%/yr
-  xyz:SILVER       OI $  158,937,228  funding    -11.9%/yr
-  xyz:SKHY         OI $  141,160,347  funding      5.5%/yr
-  xyz:CL           OI $  135,861,841  funding      5.5%/yr
-  xyz:CRCL         OI $  125,381,393  funding      8.0%/yr
-  xyz:SNDK         OI $  124,823,309  funding     -8.2%/yr
+BUILDER-DEPLOYED PERPS: 305 markets, 155 with volume today
+  xyz:SP500        OI $  375,948,559  funding      5.5%/yr
+  xyz:GOLD         OI $  301,288,198  funding      5.5%/yr
+  xyz:SKHX         OI $  275,053,479  funding    110.6%/yr
+  xyz:XYZ100       OI $  240,785,410  funding     17.0%/yr
+  xyz:BRENTOIL     OI $  197,547,347  funding    -10.6%/yr
+  xyz:SILVER       OI $  158,853,475  funding     19.7%/yr
+  xyz:CL           OI $  144,388,215  funding      5.5%/yr
+  xyz:SKHY         OI $  141,970,749  funding    100.3%/yr
+  xyz:CRCL         OI $  131,405,673  funding    152.3%/yr
+  xyz:SPCX         OI $  125,249,675  funding      5.5%/yr
 ```
